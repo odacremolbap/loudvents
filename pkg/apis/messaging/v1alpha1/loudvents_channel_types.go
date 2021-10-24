@@ -1,12 +1,9 @@
 /*
-Copyright 2020 The Knative Authors
-
+Copyright 2021 TriggerMesh Inc.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -73,7 +70,7 @@ type LoudVentsChannelStatus struct {
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// LoudVentsChannelList is a collection of in-memory channels.
+// LoudVentsChannelList is a collection of loudvents channels.
 type LoudVentsChannelList struct {
 	metav1.TypeMeta `json:",inline"`
 	// +optional
@@ -81,7 +78,7 @@ type LoudVentsChannelList struct {
 	Items           []LoudVentsChannel `json:"items"`
 }
 
-// GetStatus retrieves the status of the InMemoryChannel. Implements the KRShaped interface.
+// GetStatus retrieves the status of the LoudVentsChannel. Implements the KRShaped interface.
 func (t *LoudVentsChannel) GetStatus() *duckv1.Status {
 	return &t.Status.Status
 }

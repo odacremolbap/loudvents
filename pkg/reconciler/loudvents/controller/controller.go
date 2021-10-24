@@ -28,9 +28,9 @@ import (
 	"knative.dev/pkg/controller"
 	"knative.dev/pkg/system"
 
-	loudventschannelreconciler "github.com/odacremolbap/loudvents/pkg/client/injection/reconciler/messaging/v1alpha1/loudventschannel"
+	"github.com/odacremolbap/loudvents/pkg/client/generated/injection/informers/messaging/v1alpha1/loudventschannel"
+	loudventschannelreconciler "github.com/odacremolbap/loudvents/pkg/client/generated/injection/reconciler/messaging/v1alpha1/loudventschannel"
 	"github.com/odacremolbap/loudvents/pkg/reconciler/loudvents/controller/config"
-	"github.com/odcaremolbap/loudvents/pkg/client/injection/informers/messaging/v1alpha1/loudventschannel"
 	"knative.dev/pkg/resolver"
 
 	"knative.dev/pkg/client/injection/kube/informers/apps/v1/deployment"

@@ -114,7 +114,7 @@ func (w *wrapMessagingV1alpha1) RESTClient() rest.Interface {
 func (w *wrapMessagingV1alpha1) LoudVentsChannels(namespace string) typedmessagingv1alpha1.LoudVentsChannelInterface {
 	return &wrapMessagingV1alpha1LoudVentsChannelImpl{
 		dyn: w.dyn.Resource(schema.GroupVersionResource{
-			Group:    "messaging",
+			Group:    "messaging.reiggermesh.io",
 			Version:  "v1alpha1",
 			Resource: "loudventschannels",
 		}),
@@ -133,7 +133,7 @@ var _ typedmessagingv1alpha1.LoudVentsChannelInterface = (*wrapMessagingV1alpha1
 
 func (w *wrapMessagingV1alpha1LoudVentsChannelImpl) Create(ctx context.Context, in *v1alpha1.LoudVentsChannel, opts v1.CreateOptions) (*v1alpha1.LoudVentsChannel, error) {
 	in.SetGroupVersionKind(schema.GroupVersionKind{
-		Group:   "messaging",
+		Group:   "messaging.reiggermesh.io",
 		Version: "v1alpha1",
 		Kind:    "LoudVentsChannel",
 	})
@@ -198,7 +198,7 @@ func (w *wrapMessagingV1alpha1LoudVentsChannelImpl) Patch(ctx context.Context, n
 
 func (w *wrapMessagingV1alpha1LoudVentsChannelImpl) Update(ctx context.Context, in *v1alpha1.LoudVentsChannel, opts v1.UpdateOptions) (*v1alpha1.LoudVentsChannel, error) {
 	in.SetGroupVersionKind(schema.GroupVersionKind{
-		Group:   "messaging",
+		Group:   "messaging.reiggermesh.io",
 		Version: "v1alpha1",
 		Kind:    "LoudVentsChannel",
 	})
@@ -219,7 +219,7 @@ func (w *wrapMessagingV1alpha1LoudVentsChannelImpl) Update(ctx context.Context, 
 
 func (w *wrapMessagingV1alpha1LoudVentsChannelImpl) UpdateStatus(ctx context.Context, in *v1alpha1.LoudVentsChannel, opts v1.UpdateOptions) (*v1alpha1.LoudVentsChannel, error) {
 	in.SetGroupVersionKind(schema.GroupVersionKind{
-		Group:   "messaging",
+		Group:   "messaging.reiggermesh.io",
 		Version: "v1alpha1",
 		Kind:    "LoudVentsChannel",
 	})

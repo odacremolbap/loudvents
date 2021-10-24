@@ -52,7 +52,7 @@ func (f *genericInformer) Lister() cache.GenericLister {
 // TODO extend this to unknown resources with a client pool
 func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource) (GenericInformer, error) {
 	switch resource {
-	// Group=messaging, Version=v1alpha1
+	// Group=messaging.reiggermesh.io, Version=v1alpha1
 	case v1alpha1.SchemeGroupVersion.WithResource("loudventschannels"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Messaging().V1alpha1().LoudVentsChannels().Informer()}, nil
 

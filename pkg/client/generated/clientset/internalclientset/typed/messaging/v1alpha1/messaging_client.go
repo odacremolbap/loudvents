@@ -29,7 +29,7 @@ type MessagingV1alpha1Interface interface {
 	LoudVentsChannelsGetter
 }
 
-// MessagingV1alpha1Client is used to interact with features provided by the messaging group.
+// MessagingV1alpha1Client is used to interact with features provided by the messaging.reiggermesh.io group.
 type MessagingV1alpha1Client struct {
 	restClient rest.Interface
 }

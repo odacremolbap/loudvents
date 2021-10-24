@@ -28,7 +28,7 @@ import (
 	pkgreconciler "knative.dev/pkg/reconciler"
 
 	v1alpha1 "github.com/odacremolbap/loudvents/pkg/apis/messaging/v1alpha1"
-	loudventschannelreconciler "github.com/odacremolbap/loudvents/pkg/client/injection/reconciler/messaging/v1alpha1/loudventschannel"
+	loudventschannelreconciler "github.com/odacremolbap/loudvents/pkg/client/generated/injection/reconciler/messaging/v1alpha1/loudventschannel"
 	"github.com/odacremolbap/loudvents/pkg/reconciler/loudvents/controller/config"
 	"knative.dev/pkg/logging"
 	"knative.dev/pkg/resolver"
@@ -53,7 +53,7 @@ type Reconciler struct {
 // Check that our Reconciler implements Interface
 var _ loudventschannelreconciler.Interface = (*Reconciler)(nil)
 
-func (r *Reconciler) ReconcileKind(ctx context.Context, lvc *v1alpha1.LoadVentsChannel) pkgreconciler.Event {
+func (r *Reconciler) ReconcileKind(ctx context.Context, lvc *v1alpha1.LoudVentsChannel) pkgreconciler.Event {
 	logging.FromContext(ctx).Infow("Reconciling", zap.Any("LoadVentsChannel", lvc))
 	return nil
 }

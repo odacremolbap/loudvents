@@ -44,7 +44,7 @@ import (
 
 const (
 	defaultControllerAgentName = "loudventschannel-controller"
-	defaultFinalizerName       = "loudventschannels.messaging"
+	defaultFinalizerName       = "loudventschannels.messaging.reiggermesh.io"
 )
 
 // NewImpl returns a controller.Impl that handles queuing and feeding work from
@@ -98,7 +98,7 @@ func NewImpl(ctx context.Context, r Interface, optionsFns ...controller.OptionsF
 
 	logger = logger.With(
 		zap.String(logkey.ControllerType, ctrTypeName),
-		zap.String(logkey.Kind, "messaging.LoudVentsChannel"),
+		zap.String(logkey.Kind, "messaging.reiggermesh.io.LoudVentsChannel"),
 	)
 
 	impl := controller.NewContext(ctx, rec, controller.ControllerOptions{WorkQueueName: ctrTypeName, Logger: logger})

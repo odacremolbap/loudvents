@@ -36,9 +36,9 @@ type FakeLoudVentsChannels struct {
 	ns   string
 }
 
-var loudventschannelsResource = schema.GroupVersionResource{Group: "messaging", Version: "v1alpha1", Resource: "loudventschannels"}
+var loudventschannelsResource = schema.GroupVersionResource{Group: "messaging.reiggermesh.io", Version: "v1alpha1", Resource: "loudventschannels"}
 
-var loudventschannelsKind = schema.GroupVersionKind{Group: "messaging", Version: "v1alpha1", Kind: "LoudVentsChannel"}
+var loudventschannelsKind = schema.GroupVersionKind{Group: "messaging.reiggermesh.io", Version: "v1alpha1", Kind: "LoudVentsChannel"}
 
 // Get takes name of the loudVentsChannel, and returns the corresponding loudVentsChannel object, and an error if there is any.
 func (c *FakeLoudVentsChannels) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.LoudVentsChannel, err error) {

@@ -7,5 +7,5 @@ import (
 )
 
 func main() {
-	sharedmain.MainWithContext(loudvents.NewController)
+	sharedmain.Main("loudvents-controller", loudvents.NewController)
 }
