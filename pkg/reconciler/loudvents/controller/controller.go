@@ -41,7 +41,7 @@ import (
 )
 
 // TODO: this should be passed in on the env.
-const dispatcherName = "imc-dispatcher"
+const dispatcherName = "loudvents-dispatcher"
 
 type envConfig struct {
 	Image string `envconfig:"DISPATCHER_IMAGE" required:"true"`
@@ -91,7 +91,7 @@ func NewController(
 	// resources will affect our Channels. So, set up a watch here, that will cause
 	// a global Resync for all the channels to take stock of their health when these change.
 
-	// Call GlobalResync on loadventschannels.
+	// Call GlobalResync on loudventschannels.
 	grCh := func(obj interface{}) {
 		impl.GlobalResync(loudventschannelInformer.Informer())
 	}

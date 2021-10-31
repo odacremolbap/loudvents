@@ -39,7 +39,7 @@ GOLINT            ?= golangci-lint run --timeout 5m
 GOTOOL            ?= go tool
 GOTEST            ?= gotestsum --junitfile $(TEST_OUTPUT_DIR)/$(KREPO)-unit-tests.xml --format pkgname-and-test-fails --
 
-GOPKGS             = ./cmd/... ./pkg/apis/... ./pkg/function/... ./pkg/routing/... ./pkg/sources/... ./pkg/targets/... ./pkg/transformation/...
+GOPKGS             = ./cmd/... ./pkg/...
 LDFLAGS            = -extldflags=-static -w -s
 
 HAS_GOTESTSUM     := $(shell command -v gotestsum;)
@@ -71,10 +71,10 @@ $(filter-out confluenttarget-adapter, $(COMMANDS)): ## Build artifact
 confluenttarget-adapter:
 	CGO_ENABLED=1 $(GO) build -ldflags "$(LDFLAGS)" -o $(BIN_OUTPUT_DIR)/$@ ./cmd/$@
 
-deploy: ## Deploy LoadVents channel provider to default Kubernetes cluster using ko
+deploy: ## Deploy LoudVents channel provider to default Kubernetes cluster using ko
 	$(KO) apply -f $(BASE_DIR)/config
 
-undeploy: ## Remove LoadVents channel provider from default Kubernetes cluster using ko
+undeploy: ## Remove LoudVents channel provider from default Kubernetes cluster using ko
 	$(KO) delete -f $(BASE_DIR)/config
 
 release: ## Publish container images and generate release manifests

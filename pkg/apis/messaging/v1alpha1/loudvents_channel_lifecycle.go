@@ -21,7 +21,7 @@ import (
 	v1 "knative.dev/pkg/apis/duck/v1"
 )
 
-var imcCondSet = apis.NewLivingConditionSet(
+var loudventCondSet = apis.NewLivingConditionSet(
 	LoudVentsChannelConditionDispatcherReady,
 	LoudVentsChannelConditionServiceReady,
 	LoudVentsChannelConditionEndpointsReady,
@@ -63,7 +63,7 @@ const (
 
 // GetConditionSet retrieves the condition set for this resource. Implements the KRShaped interface.
 func (*LoudVentsChannel) GetConditionSet() apis.ConditionSet {
-	return imcCondSet
+	return loudventCondSet
 }
 
 // GetGroupVersionKind returns GroupVersionKind for LoudVentsChannels
@@ -77,102 +77,102 @@ func (i *LoudVentsChannel) GetUntypedSpec() interface{} {
 }
 
 // GetCondition returns the condition currently associated with the given type, or nil.
-func (imcs *LoudVentsChannelStatus) GetCondition(t apis.ConditionType) *apis.Condition {
-	return imcCondSet.Manage(imcs).GetCondition(t)
+func (lvcs *LoudVentsChannelStatus) GetCondition(t apis.ConditionType) *apis.Condition {
+	return loudventCondSet.Manage(lvcs).GetCondition(t)
 }
 
 // IsReady returns true if the Status condition LoudVentsChannelConditionReady
 // is true and the latest spec has been observed.
-func (imc *LoudVentsChannel) IsReady() bool {
-	imcs := imc.Status
-	return imcs.ObservedGeneration == imc.Generation &&
-		imc.GetConditionSet().Manage(&imcs).IsHappy()
+func (lvc *LoudVentsChannel) IsReady() bool {
+	lvcs := lvc.Status
+	return lvcs.ObservedGeneration == lvc.Generation &&
+		lvc.GetConditionSet().Manage(&lvcs).IsHappy()
 }
 
 // InitializeConditions sets relevant unset conditions to Unknown state.
-func (imcs *LoudVentsChannelStatus) InitializeConditions() {
-	imcCondSet.Manage(imcs).InitializeConditions()
+func (lvcs *LoudVentsChannelStatus) InitializeConditions() {
+	loudventCondSet.Manage(lvcs).InitializeConditions()
 }
 
-func (imcs *LoudVentsChannelStatus) SetAddress(url *apis.URL) {
-	imcs.Address = &v1.Addressable{URL: url}
+func (lvcs *LoudVentsChannelStatus) SetAddress(url *apis.URL) {
+	lvcs.Address = &v1.Addressable{URL: url}
 	if url != nil {
-		imcCondSet.Manage(imcs).MarkTrue(LoudVentsChannelConditionAddressable)
+		loudventCondSet.Manage(lvcs).MarkTrue(LoudVentsChannelConditionAddressable)
 	} else {
-		imcCondSet.Manage(imcs).MarkFalse(LoudVentsChannelConditionAddressable, "emptyHostname", "hostname is the empty string")
+		loudventCondSet.Manage(lvcs).MarkFalse(LoudVentsChannelConditionAddressable, "emptyHostname", "hostname is the empty string")
 	}
 }
 
-func (imcs *LoudVentsChannelStatus) MarkDispatcherFailed(reason, messageFormat string, messageA ...interface{}) {
-	imcCondSet.Manage(imcs).MarkFalse(LoudVentsChannelConditionDispatcherReady, reason, messageFormat, messageA...)
+func (lvcs *LoudVentsChannelStatus) MarkDispatcherFailed(reason, messageFormat string, messageA ...interface{}) {
+	loudventCondSet.Manage(lvcs).MarkFalse(LoudVentsChannelConditionDispatcherReady, reason, messageFormat, messageA...)
 }
 
-func (imcs *LoudVentsChannelStatus) MarkDispatcherUnknown(reason, messageFormat string, messageA ...interface{}) {
-	imcCondSet.Manage(imcs).MarkUnknown(LoudVentsChannelConditionDispatcherReady, reason, messageFormat, messageA...)
+func (lvcs *LoudVentsChannelStatus) MarkDispatcherUnknown(reason, messageFormat string, messageA ...interface{}) {
+	loudventCondSet.Manage(lvcs).MarkUnknown(LoudVentsChannelConditionDispatcherReady, reason, messageFormat, messageA...)
 }
 
 // TODO: Unify this with the ones from Eventing. Say: Broker, Trigger.
-func (imcs *LoudVentsChannelStatus) PropagateDispatcherStatus(ds *appsv1.DeploymentStatus) {
+func (lvcs *LoudVentsChannelStatus) PropagateDispatcherStatus(ds *appsv1.DeploymentStatus) {
 	for _, cond := range ds.Conditions {
 		if cond.Type == appsv1.DeploymentAvailable {
 			if cond.Status == corev1.ConditionTrue {
-				imcCondSet.Manage(imcs).MarkTrue(LoudVentsChannelConditionDispatcherReady)
+				loudventCondSet.Manage(lvcs).MarkTrue(LoudVentsChannelConditionDispatcherReady)
 			} else if cond.Status == corev1.ConditionFalse {
-				imcs.MarkDispatcherFailed("DispatcherDeploymentFalse", "The status of Dispatcher Deployment is False: %s : %s", cond.Reason, cond.Message)
+				lvcs.MarkDispatcherFailed("DispatcherDeploymentFalse", "The status of Dispatcher Deployment is False: %s : %s", cond.Reason, cond.Message)
 			} else if cond.Status == corev1.ConditionUnknown {
-				imcs.MarkDispatcherUnknown("DispatcherDeploymentUnknown", "The status of Dispatcher Deployment is Unknown: %s : %s", cond.Reason, cond.Message)
+				lvcs.MarkDispatcherUnknown("DispatcherDeploymentUnknown", "The status of Dispatcher Deployment is Unknown: %s : %s", cond.Reason, cond.Message)
 			}
 		}
 	}
 }
 
-func (imcs *LoudVentsChannelStatus) MarkServiceFailed(reason, messageFormat string, messageA ...interface{}) {
-	imcCondSet.Manage(imcs).MarkFalse(LoudVentsChannelConditionServiceReady, reason, messageFormat, messageA...)
+func (lvcs *LoudVentsChannelStatus) MarkServiceFailed(reason, messageFormat string, messageA ...interface{}) {
+	loudventCondSet.Manage(lvcs).MarkFalse(LoudVentsChannelConditionServiceReady, reason, messageFormat, messageA...)
 }
 
-func (imcs *LoudVentsChannelStatus) MarkServiceUnknown(reason, messageFormat string, messageA ...interface{}) {
-	imcCondSet.Manage(imcs).MarkUnknown(LoudVentsChannelConditionServiceReady, reason, messageFormat, messageA...)
+func (lvcs *LoudVentsChannelStatus) MarkServiceUnknown(reason, messageFormat string, messageA ...interface{}) {
+	loudventCondSet.Manage(lvcs).MarkUnknown(LoudVentsChannelConditionServiceReady, reason, messageFormat, messageA...)
 }
 
-func (imcs *LoudVentsChannelStatus) MarkServiceTrue() {
-	imcCondSet.Manage(imcs).MarkTrue(LoudVentsChannelConditionServiceReady)
+func (lvcs *LoudVentsChannelStatus) MarkServiceTrue() {
+	loudventCondSet.Manage(lvcs).MarkTrue(LoudVentsChannelConditionServiceReady)
 }
 
-func (imcs *LoudVentsChannelStatus) MarkChannelServiceFailed(reason, messageFormat string, messageA ...interface{}) {
-	imcCondSet.Manage(imcs).MarkFalse(LoudVentsChannelConditionChannelServiceReady, reason, messageFormat, messageA...)
+func (lvcs *LoudVentsChannelStatus) MarkChannelServiceFailed(reason, messageFormat string, messageA ...interface{}) {
+	loudventCondSet.Manage(lvcs).MarkFalse(LoudVentsChannelConditionChannelServiceReady, reason, messageFormat, messageA...)
 }
 
-func (imcs *LoudVentsChannelStatus) MarkChannelServiceUnknown(reason, messageFormat string, messageA ...interface{}) {
-	imcCondSet.Manage(imcs).MarkUnknown(LoudVentsChannelConditionChannelServiceReady, reason, messageFormat, messageA...)
+func (lvcs *LoudVentsChannelStatus) MarkChannelServiceUnknown(reason, messageFormat string, messageA ...interface{}) {
+	loudventCondSet.Manage(lvcs).MarkUnknown(LoudVentsChannelConditionChannelServiceReady, reason, messageFormat, messageA...)
 }
 
-func (imcs *LoudVentsChannelStatus) MarkChannelServiceTrue() {
-	imcCondSet.Manage(imcs).MarkTrue(LoudVentsChannelConditionChannelServiceReady)
+func (lvcs *LoudVentsChannelStatus) MarkChannelServiceTrue() {
+	loudventCondSet.Manage(lvcs).MarkTrue(LoudVentsChannelConditionChannelServiceReady)
 }
 
-func (imcs *LoudVentsChannelStatus) MarkEndpointsFailed(reason, messageFormat string, messageA ...interface{}) {
-	imcCondSet.Manage(imcs).MarkFalse(LoudVentsChannelConditionEndpointsReady, reason, messageFormat, messageA...)
+func (lvcs *LoudVentsChannelStatus) MarkEndpointsFailed(reason, messageFormat string, messageA ...interface{}) {
+	loudventCondSet.Manage(lvcs).MarkFalse(LoudVentsChannelConditionEndpointsReady, reason, messageFormat, messageA...)
 }
 
-func (imcs *LoudVentsChannelStatus) MarkEndpointsUnknown(reason, messageFormat string, messageA ...interface{}) {
-	imcCondSet.Manage(imcs).MarkUnknown(LoudVentsChannelConditionEndpointsReady, reason, messageFormat, messageA...)
+func (lvcs *LoudVentsChannelStatus) MarkEndpointsUnknown(reason, messageFormat string, messageA ...interface{}) {
+	loudventCondSet.Manage(lvcs).MarkUnknown(LoudVentsChannelConditionEndpointsReady, reason, messageFormat, messageA...)
 }
 
-func (imcs *LoudVentsChannelStatus) MarkEndpointsTrue() {
-	imcCondSet.Manage(imcs).MarkTrue(LoudVentsChannelConditionEndpointsReady)
+func (lvcs *LoudVentsChannelStatus) MarkEndpointsTrue() {
+	loudventCondSet.Manage(lvcs).MarkTrue(LoudVentsChannelConditionEndpointsReady)
 }
 
-func (imcs *LoudVentsChannelStatus) MarkDeadLetterSinkResolvedSucceeded(deadLetterSinkURI *apis.URL) {
-	imcs.DeliveryStatus.DeadLetterSinkURI = deadLetterSinkURI
-	imcCondSet.Manage(imcs).MarkTrue(LoudVentsChannelConditionDeadLetterSinkResolved)
+func (lvcs *LoudVentsChannelStatus) MarkDeadLetterSinkResolvedSucceeded(deadLetterSinkURI *apis.URL) {
+	lvcs.DeliveryStatus.DeadLetterSinkURI = deadLetterSinkURI
+	loudventCondSet.Manage(lvcs).MarkTrue(LoudVentsChannelConditionDeadLetterSinkResolved)
 }
 
-func (imcs *LoudVentsChannelStatus) MarkDeadLetterSinkNotConfigured() {
-	imcs.DeadLetterSinkURI = nil
-	imcCondSet.Manage(imcs).MarkTrueWithReason(LoudVentsChannelConditionDeadLetterSinkResolved, "DeadLetterSinkNotConfigured", "No dead letter sink is configured.")
+func (lvcs *LoudVentsChannelStatus) MarkDeadLetterSinkNotConfigured() {
+	lvcs.DeadLetterSinkURI = nil
+	loudventCondSet.Manage(lvcs).MarkTrueWithReason(LoudVentsChannelConditionDeadLetterSinkResolved, "DeadLetterSinkNotConfigured", "No dead letter sink is configured.")
 }
 
-func (imcs *LoudVentsChannelStatus) MarkDeadLetterSinkResolvedFailed(reason, messageFormat string, messageA ...interface{}) {
-	imcs.DeadLetterSinkURI = nil
-	imcCondSet.Manage(imcs).MarkFalse(LoudVentsChannelConditionDeadLetterSinkResolved, reason, messageFormat, messageA...)
+func (lvcs *LoudVentsChannelStatus) MarkDeadLetterSinkResolvedFailed(reason, messageFormat string, messageA ...interface{}) {
+	lvcs.DeadLetterSinkURI = nil
+	loudventCondSet.Manage(lvcs).MarkFalse(LoudVentsChannelConditionDeadLetterSinkResolved, reason, messageFormat, messageA...)
 }
