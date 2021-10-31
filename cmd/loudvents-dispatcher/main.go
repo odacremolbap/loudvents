@@ -17,11 +17,23 @@ limitations under the License.
 package main
 
 import (
-	"knative.dev/pkg/injection/sharedmain"
+	"os"
 
-	loudvents "github.com/odacremolbap/loudvents/pkg/reconciler/loudvents/controller"
+	"knative.dev/pkg/injection"
+	"knative.dev/pkg/injection/sharedmain"
+	"knative.dev/pkg/signals"
+
+	loudventsdispatcher "github.com/odacremolbap/loudvents/pkg/reconciler/loudvents/dispatcher"
 )
 
 func main() {
-	sharedmain.Main("loudvents-controller", loudvents.NewController)
+	ctx := signals.NewContext()
+	ns := os.Getenv("NAMESPACE")
+	if ns != "" {
+		ctx = injection.WithNamespaceScope(ctx, ns)
+	}
+
+	sharedmain.MainWithContext(ctx, "loudvents-dispatcher",
+		loudventsdispatcher.NewController,
+	)
 }

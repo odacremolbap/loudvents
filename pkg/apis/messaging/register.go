@@ -21,7 +21,7 @@ const (
 )
 
 var (
-	// InMemoryChannelsResource represents a LodVent Knative Channel
+	// LoudVentsChannelsResource represents a LodVent Knative Channel
 	LoudVentsChannelsResource = schema.GroupResource{
 		Group:    GroupName,
 		Resource: "loudventchannels",

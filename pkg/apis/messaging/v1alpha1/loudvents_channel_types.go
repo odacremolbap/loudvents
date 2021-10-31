@@ -42,12 +42,12 @@ type LoudVentsChannel struct {
 }
 
 var (
-	// Check that InMemoryChannel can return its spec untyped.
+	// Check that LoudVentsChannel can return its spec untyped.
 	_ apis.HasSpec = (*LoudVentsChannel)(nil)
 
 	_ runtime.Object = (*LoudVentsChannel)(nil)
 
-	// Check that we can create OwnerReferences to an InMemoryChannel.
+	// Check that we can create OwnerReferences to an LoudVentsChannel.
 	_ kmeta.OwnerRefable = (*LoudVentsChannel)(nil)
 
 	// Check that the type conforms to the duck Knative Resource shape.
@@ -55,7 +55,7 @@ var (
 )
 
 // LoudVentsChannelSpec defines which subscribers have expressed interest in
-// receiving events from this InMemoryChannel.
+// receiving events from this LoudVentsChannel.
 // arguments for a Channel.
 type LoudVentsChannelSpec struct {
 	// Channel conforms to Duck type Channelable.

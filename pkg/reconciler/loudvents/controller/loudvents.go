@@ -54,6 +54,19 @@ type Reconciler struct {
 var _ loudventschannelreconciler.Interface = (*Reconciler)(nil)
 
 func (r *Reconciler) ReconcileKind(ctx context.Context, lvc *v1alpha1.LoudVentsChannel) pkgreconciler.Event {
-	logging.FromContext(ctx).Infow("Reconciling", zap.Any("LoadVentsChannel", lvc))
+	logging.FromContext(ctx).Infow("Reconciling", zap.Any("LoudVentsChannel", lvc))
+
+	// reconcile dispatcher
+
+	// reconcile dispatcher service
+
+	// check endpoints for dispatcher service
+
+	// reconcile the external name service
+
+	// set address
+
+	// set dls
+
 	return nil
 }
